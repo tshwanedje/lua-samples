@@ -1,0 +1,29 @@
+--If none of our children are visible then clear all our text before/after styles
+local function HaveVisibleDescendants(Node,Styles)
+	local Num = Node:GetNumChildren()
+	for i=0, Num-1 do
+	    local Child = This:GetChild(i);
+	    if HaveVisibleDescendants(Child) == true then
+               return true;
+            end
+	end
+	if tIsVisible(Node,Styles) and tHasVisibleAttributes(Node, Styles) then
+		return true;
+	end
+end
+
+
+local This = gCurrentNode;
+local Styles = tGetNodeDoc(gCurrentNode):GetCurrentStyles();
+local Num = This:GetNumChildren();
+for i=0, Num-1 do
+	if HaveVisibleDescendants(This:GetChild(i),Styles) then
+		return;
+	end
+end
+
+gCurrentStyle:SetBeforeI("");
+gCurrentStyle:SetAfterI("");
+gCurrentStyle:SetBeforeO("");
+gCurrentStyle:SetAfterO("");
+				

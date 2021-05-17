@@ -1,0 +1,1 @@
+AddElement(tApp():GetCurrentDoc(),"Sense",NODE_NODE,NODE_SENSE,0);

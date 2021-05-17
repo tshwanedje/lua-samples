@@ -1,0 +1,15 @@
+local AUTONUMATTRNAME = "HomonymNumber";
+local IMPORTEDNUMATTRNAME = "ImportedHomonymNumber";
+local NODENAME = "Lemma";
+
+local NODE = gCurrentNode;
+local ATTR = NODE:GetElement():FindAttributeByName(IMPORTEDNUMATTRNAME );
+local ATTR2 = NODE:GetElement():FindAttributeByName(AUTONUMATTRNAME);
+local STYLE = tApp():GetCurrentDoc():GetCurrentStyles():FindAttributeStyleByName(NODENAME,AUTONUMATTRNAME);
+local VAL = tGetAutoNumberString(NODE,ATTR2,STYLE);
+local VAL2 = NODE:GetAttributeDisplayAsString(ATTR);
+if VAL == VAL2 or VAL == "0" then
+    return " ";
+else
+    return "[AUTONUMERR]";
+end
