@@ -1,20 +1,32 @@
 -- Sample Lua script
 --
 -- Call a function on all entries in the currently selected section window that
--- pass the currently applied filter.
---
+-- pass the currently applied filter, and recurse all nodes in document tree
+-- 
 -- To run this:
--- 1. Open TLex/tlTerm/tlDatabase
+-- 1. Open TLex/tlTerm/tlDatabase, and open your document
 -- 2. Go to 'Tools' menu, select "Execute Lua Script", and select this file
-
-function YourFunc(ENTRY)
-	tLuaLog(ENTRY:GetLemmaSign());
-end
 
 -- Make sure we have a document open
 local DOC = tApp():GetCurrentDoc();
 if DOC == nil then
 	return "No document open";
+end
+
+function YourFunc(ENTRY,NODE)
+	-- Log to application log just to help show it's working - comment out log if it's slowing things down for your script
+	if ENTRY==NODE then
+		tLuaLog('Entry:'..ENTRY:GetLemmaSign());
+	end
+
+	-- Typically your own custom document node processing might go here
+
+	-- Recurse through child nodes (child XML elements or text nodes etc.)
+	local k;
+	for k=0,NODE:GetNumChildren()-1,1 do
+		local CHILD = NODE:GetChild(k);
+		YourFunc(ENTRY,CHILD);
+	end
 end
 
 -- Get currently selected section/language window in the application
@@ -32,7 +44,7 @@ for i=0,SECTION:GetNumEntries()-1,1 do
 	end
 
 	if include then
-		YourFunc(ENTRY);
+		YourFunc(ENTRY,ENTRY);
 	end
 end
 
