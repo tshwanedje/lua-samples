@@ -5,7 +5,13 @@ local DOC = tApp():GetCurrentDoc();
 local DTD = DOC:GetDTD();
 
 local ELEM = DTD:FindElementByName("Entry");
+if ELEM == nil then
+    return "Error: element not found."
+end
 local ATTR = ELEM:FindAttributeByName("SUBJECT");
+if ATTR == nil then
+    return "Error: attribute not found."
+end
 local list = DTD:FindListByName("SUBJECT");
 local value = "History";
 
@@ -13,6 +19,12 @@ local value = "History";
 local idListItemValue = -1;
 if list~=nil then
     idListItemValue = list:FindByText(value);
+else
+    return "Error: List item not found."
+end
+
+if gCurrentEntry == nil then
+    return "Error: No current entry."
 end
 
 -- If we found the list item ID (if not it's an invalid list item specified above)
