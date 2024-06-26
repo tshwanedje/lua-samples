@@ -31,7 +31,10 @@ end
 if idListItemValue>=0 then
     -- If we have entry
     if gCurrentEntry~=nil and ATTR~=nil then
-        gCurrentEntry:SetAttributeListID(ATTR, idListItemValue);
+        --gCurrentEntry:SetAttributeListID(ATTR, idListItemValue);
+        if not gCurrentEntry:HasAttributeListID(ATTR, idListItemValue) then
+            gCurrentEntry:AddAttributeListID(ATTR, idListItemValue);
+        end
     end
 end
 
