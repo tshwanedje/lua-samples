@@ -31,6 +31,8 @@ end
 if idListItemValue>=0 then
     -- If we have entry
     if gCurrentEntry~=nil and ATTR~=nil then
+        -- Note: SetAttributeListID is for single-selection list types ... for multi-selection lists use AddAttributeListID
+        -- This script could be adapted here for single-selection lists below in future (it can use ATTR type to auto-detect even):
         --gCurrentEntry:SetAttributeListID(ATTR, idListItemValue);
         if not gCurrentEntry:HasAttributeListID(ATTR, idListItemValue) then
             gCurrentEntry:AddAttributeListID(ATTR, idListItemValue);
